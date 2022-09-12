@@ -39,3 +39,13 @@ def criar_tarefa(tarefa: Tarefa):
     tarefas.append(tarefa)
     return tarefa
 
+@app.delete("/tarefas/{id}")
+def deletar_datefa(id: str):
+    for index, tarefa in enumerate(tarefas):
+        if(tarefa.id == id):
+            posicao = index
+            tarefas.pop(posicao)
+            return "Tarefa deletada!"
+ 
+    return{"erro": "Tarefa não encontrada"}
+
