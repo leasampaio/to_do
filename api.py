@@ -43,9 +43,22 @@ def criar_tarefa(tarefa: Tarefa):
 def deletar_datefa(id: str):
     for index, tarefa in enumerate(tarefas):
         if(tarefa.id == id):
-            posicao = index
-            tarefas.pop(posicao)
+            tarefas.pop(index)
             return "Tarefa deletada!"
  
     return{"erro": "Tarefa não encontrada"}
 
+@app.put("/tarefas/{id}")
+def atualizar_tarefa(id: str, nome: Optional [str], descricao: Optional [str], data_criacao: Optional [str], data_limite: Optional [str]):
+    tarefa_atualizada = {
+        "name": nome,
+        "descricao": descricao,
+        "id": id,
+        "data_de_criacao": data_criacao,
+        "data_limite": data_limite
+    }
+    for index, tarefa in enumerate(tarefas):
+        if(tarefa.id == id):
+            tarefas[index] = tarefa_atualizada
+            return "Atualizada"
+    return {"erro": "tarefa não encontrada"}
