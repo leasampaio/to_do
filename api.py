@@ -22,11 +22,11 @@ tarefas: List = []
 
 
 @app.get("/tarefas")
-def listar_tarefas():
+async def listar_tarefas():
     return tarefas
 
 @app.get("/tarefas/{id}")
-def listar_uma_tarefa(id: str):
+async def listar_uma_tarefa(id: str):
     for tarefa in tarefas:
         if tarefa.id ==id:
             return tarefa
@@ -34,13 +34,13 @@ def listar_uma_tarefa(id: str):
     return {"erro": "Tarefa não localizada"}
 
 @app.post("/tarefas")
-def criar_tarefa(tarefa: Tarefa):   
+async def criar_tarefa(tarefa: Tarefa):   
     tarefa.id =str(uuid4())
     tarefas.append(tarefa)
     return tarefa
 
 @app.delete("/tarefas/{id}")
-def deletar_datefa(id: str):
+async def deletar_datefa(id: str):
     for index, tarefa in enumerate(tarefas):
         if(tarefa.id == id):
             tarefas.pop(index)
@@ -49,7 +49,7 @@ def deletar_datefa(id: str):
     return{"erro": "Tarefa não encontrada"}
 
 @app.put("/tarefas/{id}")
-def atualizar_tarefa(id: str, nome: Optional [str], descricao: Optional [str], data_criacao: Optional [str], data_limite: Optional [str]):
+async def atualizar_tarefa(id: str, nome: Optional[str], descricao: Optional[str], data_criacao: Optional[str], data_limite: Optional[str]):
     tarefa_atualizada = {
         "name": nome,
         "descricao": descricao,
